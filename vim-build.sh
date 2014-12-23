@@ -11,7 +11,14 @@ wget $VIM_URL
 
 rpm -ivh vim-*.src.rpm
 
-patch -p0 < vim-lterm.patch
+WORKSPACE=`pwd`
+
+cd $HOME
+patch -p0 < $WORKSPACE/vim-lterm.patch
+
+rpmbuild -ba rpmbuild/SPECS/vim.spec
+
+cp rpmbuild/RPMS/x86_64/* $WORKSPACE
 
 rm $SAVE_FILENAME
 rm vim-*.src.rpm

@@ -2,6 +2,7 @@
 
 BASE_REPO_URL="http://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/source/SRPMS/"
 SAVE_FILENAME='primary.sqlite'
+WORKSPACE=`pwd`
 
 curl `ruby repo-get.rb` | unxz > $SAVE_FILENAME
 
@@ -9,16 +10,15 @@ VIM_URL=$(echo $BASE_REPO_URL`sqlite3 primary.sqlite 'select location_href from 
 
 wget $VIM_URL
 
+cat <<EOL > $HOME/.rpmmacros
+%_topdir $WORKSPACE/rpmbuild
+EOL
+
 rpm -ivh vim-*.src.rpm
 
-WORKSPACE=`pwd`
-
-cd $HOME
-patch -p0 < $WORKSPACE/vim-lterm.patch
+patch -p0 < vim-lterm.patch
 
 rpmbuild -ba rpmbuild/SPECS/vim.spec
-
-cp rpmbuild/RPMS/x86_64/* $WORKSPACE
 
 rm $SAVE_FILENAME
 rm vim-*.src.rpm

@@ -1,0 +1,10 @@
+--- rpmbuild/SPECS/vim.spec.org 2014-10-21 14:40:38.341353099 +0900
++++ rpmbuild/SPECS/vim.spec     2014-10-21 14:40:50.383690557 +0900
+@@ -1186,6 +1186,7 @@
+
+ export CFLAGS="%{optflags} -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2"
+ export CXXFLAGS="%{optflags} -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2"
++export LIBS="-ltermcap"
+
+ cp -f os_unix.h os_unix.h.save
+ cp -f ex_cmds.c ex_cmds.c.save
